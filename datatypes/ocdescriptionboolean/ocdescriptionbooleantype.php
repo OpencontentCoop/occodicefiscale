@@ -33,20 +33,21 @@ class OCDescriptionBooleanType extends eZBooleanType
             } else {
                 $classAttribute->setAttribute("data_int3", 0);
             }
-        }
 
-        if ($http->hasPostVariable($base . "_ezboolean_text_" . $classAttribute->attribute("id"))) {
-            $data = $http->postVariable($base . "_ezboolean_text_" . $classAttribute->attribute("id"));
-            $classAttribute->setAttribute("data_text5", $data);
-        } else {
-            $classAttribute->setAttribute("data_text5", '');
+            if ($http->hasPostVariable($base . "_ezboolean_text_" . $classAttribute->attribute("id"))) {
+                $data = $http->postVariable($base . "_ezboolean_text_" . $classAttribute->attribute("id"));
+                $classAttribute->setAttribute("data_text5", $data);
+            } else {
+                $classAttribute->setAttribute("data_text5", '');
+            }
+            if ($http->hasPostVariable($base . "_ezboolean_accept_text_" . $classAttribute->attribute("id"))) {
+                $data = $http->postVariable($base . "_ezboolean_accept_text_" . $classAttribute->attribute("id"));
+                $classAttribute->setAttribute("data_text4", $data);
+            } else {
+                $classAttribute->setAttribute("data_text4", '');
+            }
         }
-        if ($http->hasPostVariable($base . "_ezboolean_accept_text_" . $classAttribute->attribute("id"))) {
-            $data = $http->postVariable($base . "_ezboolean_accept_text_" . $classAttribute->attribute("id"));
-            $classAttribute->setAttribute("data_text4", $data);
-        } else {
-            $classAttribute->setAttribute("data_text4", '');
-        }
+        
         return true;
     }
 
