@@ -140,6 +140,30 @@ class OCCodiceFiscaleType extends eZStringType
     {
         return false;
     }
+
+    /**
+     * @param string $data
+     * @param int $contentClassAttributeID
+     * @return bool|eZContentObject
+     */
+    public static function fetchObjectByCodiceFiscale($codiceFiscale, $contentClassAttributeID)
+    {
+        $db = eZDB::instance();
+
+        $query = "SELECT co.id
+				FROM ezcontentobject co, ezcontentobject_attribute coa
+				WHERE co.id = coa.contentobject_id
+				AND co.current_version = coa.version				
+				AND coa.contentclassattribute_id = " . $db->escapeString($contentClassAttributeID) . "
+				AND coa.data_text = '" . $db->escapeString($codiceFiscale) . "'";
+
+        $result = $db->arrayQuery($query);
+        if (isset($result[0]['id'])){
+            return eZContentObject::fetch((int)$result[0]['id']);
+        }
+
+        return false;
+    }
 }
 
 eZDataType::register(OCCodiceFiscaleType::DATA_TYPE_STRING, "OCCodiceFiscaleType");
