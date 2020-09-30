@@ -94,6 +94,7 @@ class OCCodiceFiscaleType extends eZStringType
 				FROM ezcontentobject co, ezcontentobject_attribute coa
 				WHERE co.id = coa.contentobject_id
 				AND co.current_version = coa.version
+				AND co.status = " . eZContentObject::STATUS_PUBLISHED . "
 				AND coa.contentobject_id <> " . $db->escapeString($contentObjectID) . "
 				AND coa.contentclassattribute_id = " . $db->escapeString($contentClassAttributeID) . "
 				AND coa.data_text = '" . $db->escapeString($data) . "'";
@@ -153,7 +154,8 @@ class OCCodiceFiscaleType extends eZStringType
         $query = "SELECT co.id
 				FROM ezcontentobject co, ezcontentobject_attribute coa
 				WHERE co.id = coa.contentobject_id
-				AND co.current_version = coa.version				
+				AND co.current_version = coa.version
+				AND co.status = " . eZContentObject::STATUS_PUBLISHED . "				
 				AND coa.contentclassattribute_id = " . $db->escapeString($contentClassAttributeID) . "
 				AND coa.data_text = '" . $db->escapeString($codiceFiscale) . "'";
 
