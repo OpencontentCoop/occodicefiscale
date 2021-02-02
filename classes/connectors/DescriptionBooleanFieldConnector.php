@@ -21,4 +21,9 @@ class DescriptionBooleanFieldConnector extends FieldConnector\BooleanField
             'rightLabel' => $this->attribute->attribute('data_text4')
         );
     }
+
+    public function setPayload($postData)
+    {
+        return $postData === 'true' ? '1' : '0';
+    }
 }
