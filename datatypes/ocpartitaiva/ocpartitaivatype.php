@@ -13,7 +13,7 @@ class OCPartitaIvaType extends eZStringType
     {
         $this->eZDataType(
             self::DATA_TYPE_STRING,
-            ezpI18n::tr('extension/ocpartitaiva', 'Partita IVA'),
+            ezpI18n::tr('extension/ocpartitaiva', 'VAT number'),
             array(
                 'serialize_supported' => true,
                 'object_serialize_map' => array('data_text' => 'text')
@@ -125,7 +125,7 @@ class OCPartitaIvaType extends eZStringType
         $resultCount = $result[0]['datacounter'];
 
         if ($resultCount) {
-            $contentObjectAttribute->setValidationError(ezpI18n::tr('extension/ocpartitaiva', 'Il codice fiscale inserito è già utilizzato nel sistema'));
+            $contentObjectAttribute->setValidationError(ezpI18n::tr('extension/ocpartitaiva', 'The VAT number entered is already used in the system'));
             return eZInputValidator::STATE_INVALID;
         }
 

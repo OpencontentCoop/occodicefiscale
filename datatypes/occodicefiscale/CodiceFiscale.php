@@ -73,11 +73,13 @@ class CodiceFiscale
             "L" => "07", "M" => "08", "P" => "09", "R" => "10", "S" => "11", "T" => "12");
 
         // Tabella messaggi di errore
-        $this->TabErrori = array(0 => "Codice da analizzare assente",
-            1 => "Lunghezza codice da analizzare non corretta",
-            2 => "Il codice da analizzare contiene caratteri non corretti",
-            3 => "Carattere non valido in decodifica omocodia",
-            4 => "Codice fiscale non corretto");
+        $this->TabErrori = array(
+            0 => 'Fiscal Code not found or empty',
+            1 => 'Fiscal Code length incorrect',
+            2 => 'Fiscal Code contains incorrect characters',
+            3 => 'Invalid character in homocody decoding',
+            4 => 'Wrong Fiscal Code',
+        );
     }
 
     public function SetCF($cf)

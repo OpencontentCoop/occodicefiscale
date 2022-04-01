@@ -8,6 +8,7 @@ AvailableDataTypes[]=ocdescriptionboolean
 
 [CodiceFiscaleSettings]
 UniqueValidator=enabled
+FormalValidation=enabled
 
 [PartitaIvaSettings]
 UniqueValidator=disabled

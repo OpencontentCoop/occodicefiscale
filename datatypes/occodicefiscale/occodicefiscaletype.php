@@ -13,7 +13,7 @@ class OCCodiceFiscaleType extends eZStringType
     {
         $this->eZDataType(
             self::DATA_TYPE_STRING,
-            ezpI18n::tr('extension/occodicefiscale', 'Codice fiscale'),
+            ezpI18n::tr('extension/occodicefiscale', 'Fiscal Code'),
             array(
                 'serialize_supported' => true,
                 'object_serialize_map' => array('data_text' => 'text')
@@ -57,11 +57,13 @@ class OCCodiceFiscaleType extends eZStringType
      */
     function validateStringHTTPInput($data, $contentObjectAttribute, $classAttribute)
     {
-        $codiceFiscale = new CodiceFiscale();
-        $codiceFiscale->SetCF($data);
-        if (!$codiceFiscale->GetCodiceValido()) {
-            $contentObjectAttribute->setValidationError($codiceFiscale->GetErrore());
-            return eZInputValidator::STATE_INVALID;
+        if (eZINI::instance('content.ini')->variable('CodiceFiscaleSettings', 'FormalValidation') == 'enabled') {
+            $codiceFiscale = new CodiceFiscale();
+            $codiceFiscale->SetCF($data);
+            if (!$codiceFiscale->GetCodiceValido()) {
+                $contentObjectAttribute->setValidationError($codiceFiscale->GetErrore());
+                return eZInputValidator::STATE_INVALID;
+            }
         }
 
         if (eZINI::instance('content.ini')->variable('CodiceFiscaleSettings', 'UniqueValidator') == 'enabled') {
@@ -104,7 +106,7 @@ class OCCodiceFiscaleType extends eZStringType
         $resultCount = $result[0]['datacounter'];
 
         if ($resultCount) {
-            $contentObjectAttribute->setValidationError(ezpI18n::tr('extension/occodicefiscale', 'Il codice fiscale inserito è già utilizzato nel sistema'));
+            $contentObjectAttribute->setValidationError(ezpI18n::tr('extension/occodicefiscale', 'The entered fiscal code is already used in the system'));
             return eZInputValidator::STATE_INVALID;
         }
 
@@ -118,20 +120,20 @@ class OCCodiceFiscaleType extends eZStringType
      */
     function fromString( $contentObjectAttribute, $string )
     {
-        $codiceFiscale = new CodiceFiscale();
-        $codiceFiscale->SetCF($string);
-        if ($codiceFiscale->GetCodiceValido()) {
+        $isValid = true;
+        if (eZINI::instance('content.ini')->variable('CodiceFiscaleSettings', 'FormalValidation') == 'enabled') {
+            $codiceFiscale = new CodiceFiscale();
+            $codiceFiscale->SetCF($string);
+            $isValid = $codiceFiscale->GetCodiceValido();
+        }
 
-            $isValid = true;
-            if (eZINI::instance('content.ini')->variable('CodiceFiscaleSettings', 'UniqueValidator') == 'enabled') {
-                $isValid = self::validateUniqueStringHTTPInput($string, $contentObjectAttribute) == eZInputValidator::STATE_ACCEPTED;
-            }
+        if (eZINI::instance('content.ini')->variable('CodiceFiscaleSettings', 'UniqueValidator') == 'enabled') {
+            $isValid = self::validateUniqueStringHTTPInput($string, $contentObjectAttribute) == eZInputValidator::STATE_ACCEPTED;
+        }
 
-            if ($isValid) {
-                $contentObjectAttribute->setAttribute('data_text', $string);
-
-                return true;
-            }
+        if ($isValid) {
+            $contentObjectAttribute->setAttribute('data_text', $string);
+            return true;
         }
 
         return false;
