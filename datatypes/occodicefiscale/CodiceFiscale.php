@@ -74,11 +74,11 @@ class CodiceFiscale
 
         // Tabella messaggi di errore
         $this->TabErrori = array(
-            0 => 'Fiscal Code not found or empty',
-            1 => 'Fiscal Code length incorrect',
-            2 => 'Fiscal Code contains incorrect characters',
-            3 => 'Invalid character in homocody decoding',
-            4 => 'Wrong Fiscal Code',
+            0 => ezpI18n::tr('extension/occodicefiscale', 'Fiscal Code not found or empty'),
+            1 => ezpI18n::tr('extension/occodicefiscale', 'Fiscal Code length incorrect'),
+            2 => ezpI18n::tr('extension/occodicefiscale', 'Fiscal Code contains incorrect characters'),
+            3 => ezpI18n::tr('extension/occodicefiscale', 'Invalid character in homocody decoding'),
+            4 => ezpI18n::tr('extension/occodicefiscale', 'Wrong Fiscal Code'),
         );
     }
 
