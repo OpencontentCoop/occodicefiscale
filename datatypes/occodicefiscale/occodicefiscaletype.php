@@ -33,7 +33,7 @@ class OCCodiceFiscaleType extends eZStringType
         {
             $data = $http->postVariable( $base . '_ezstring_data_text_' . $contentObjectAttribute->attribute( 'id' ) );
             $data = strtoupper($data);
-            $contentObjectAttribute->setAttribute( 'data_text', $data );
+            $contentObjectAttribute->setAttribute( 'data_text', trim($data) );
 
             return true;
         }
